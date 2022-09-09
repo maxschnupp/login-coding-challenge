@@ -9,7 +9,7 @@ const InputColumn = ({children} : IInputColumnProps) => {
   const Column = styled("div")({
     width: "276px",
     height: "100px",
-    backgroundColor: "red",
+    // backgroundColor: "red",
     margin: '8px 8px 8px 8px',
   });
   return <Column>{children}</Column>
