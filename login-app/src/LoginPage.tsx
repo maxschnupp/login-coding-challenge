@@ -13,7 +13,7 @@ import {
   AcceptanceCriteriaState,
   AcceptanceCriteriaType,
 } from "./domain/passwords/types";
-import { allStatesPassed, getIsSatisfied, updateAcceptanceCriteriaStates } from "./domain/passwords/acceptanceStates";
+import { allStatesSatisfied, getIsSatisfied, updateAcceptanceCriteriaStates } from "./domain/passwords/acceptanceStates";
 
 const Container = styled.div({
   position: "absolute",
@@ -85,6 +85,7 @@ const LoginPage = (): JSX.Element => {
         <InputColumn>
           <Typography text={"Email"} />
           <TextInput
+            aria-label="email-input"
             type={"email"}
             onChange={handleOnChangeEmail}
             value={email}
@@ -94,6 +95,7 @@ const LoginPage = (): JSX.Element => {
         <InputColumn>
           <Typography text={"Password"} />
           <TextInput
+            aria-label="password-input"
             type={"password"}
             onChange={handleOnChangePassword}
             value={password}
@@ -136,10 +138,11 @@ const LoginPage = (): JSX.Element => {
             />
           </CriteriaContainer>
           <Button
+            aria-label="submit-button"
             onClick={() => {
               console.log(`email: ${email} password: ${password} 🎉🎉🎉🎉🎉`);
             }}
-            disabled={!allStatesPassed(passwordCriteriaStates)}
+            disabled={!allStatesSatisfied(passwordCriteriaStates)}
             text={"Submit"}
           />
         </InputColumn>

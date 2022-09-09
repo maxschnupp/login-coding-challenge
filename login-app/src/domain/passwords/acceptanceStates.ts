@@ -27,4 +27,4 @@ export const getIsSatisfied = (
   return matchingState.isSatisfied;
 };
 
-export const allStatesPassed = (states : AcceptanceCriteriaState[]) => states.map(state => state.isSatisfied).reduce((previous, current) => previous && current)
+export const allStatesSatisfied = (states : AcceptanceCriteriaState[]) => states.map(state => state.isSatisfied).reduce((previous, current) => previous && current)
