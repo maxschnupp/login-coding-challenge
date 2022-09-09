@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
 import React from "react";
 
-interface ITextInputProps {shouldShowAsDots: boolean};
+interface ITextInputProps {shouldShowAsDots: boolean, isMobile: boolean};
 
-const TextInput = ({shouldShowAsDots} : ITextInputProps): JSX.Element => {
+const TextInput = ({shouldShowAsDots, isMobile} : ITextInputProps): JSX.Element => {
   const StyledInput = styled("input")({
-    width: "240px",
+    width: isMobile? "220px" : "240px",
     height: "52px",
     border: "2px solid black",
     fontFamily: "'Arial MT', sans-serif",

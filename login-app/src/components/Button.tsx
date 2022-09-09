@@ -4,11 +4,12 @@ import React  from "react";
 interface IButtonProps {
     onClick: () => void;
     text: string;
+    isMobile: boolean;
 }
 
-const Button = ({onClick, text} : IButtonProps) => {
+const Button = ({onClick, text, isMobile} : IButtonProps) => {
     const StyledButton = styled('button')({
-        width: '276px',
+        width: isMobile ? '256px' : '276px',
         height: '52px',
         backgroundColor: 'black',
         fontFamily: "'Arial MT', sans-serif",

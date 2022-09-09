@@ -18,14 +18,14 @@ const LoginPage = (): JSX.Element => {
   return (
     <Container>
       <LoginCard isMobile={isMobile}>
-        <InputColumn>
+        <InputColumn isMobile={isMobile}>
           <Typography text={"Email"} />
-          <TextInput shouldShowAsDots={false}/>
+          <TextInput isMobile={isMobile} shouldShowAsDots={false}/>
         </InputColumn>
-        <InputColumn>
+        <InputColumn isMobile={isMobile}>
           <Typography text={"Password"} />
-          <TextInput shouldShowAsDots={true}/>
-          <Button onClick={() => {}} text={'Submit'}/>
+          <TextInput isMobile={isMobile} shouldShowAsDots={true}/>
+          <Button isMobile={isMobile} onClick={() => {}} text={'Submit'}/>
         </InputColumn>
       </LoginCard>
     </Container>

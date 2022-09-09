@@ -11,7 +11,6 @@ const LoginCard = ({ children, isMobile }: ILoginCardProps) => {
     border: "2px solid black",
     marginLeft: "16px",
     marginRight: "16px",
-    minHeight: "200px",
     paddingLeft: "8px",
     paddingRight: "8px",
     paddingTop: "24px",
