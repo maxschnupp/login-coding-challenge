@@ -1,5 +1,5 @@
 import { AcceptanceCriteriaType } from "./types"
-import { updateAcceptanceCriteriaStates } from "./updateAcceptanceStates"
+import { updateAcceptanceCriteriaStates } from "./acceptanceStates"
 
 describe('updateAcceptanceCriteriaStates', () => {
     it('changes isSatisified to true for pieces of criteria state that are satisfied by the password', () => {

@@ -1,5 +1,5 @@
 import { makePasswordCriteriaValidator } from "./makePasswordCritirieaValidator";
-import { AcceptanceCriteriaState } from "./types";
+import { AcceptanceCriteriaState, AcceptanceCriteriaType } from "./types";
 
 export const updateAcceptanceCriteriaStates = (
   states: AcceptanceCriteriaState[],
@@ -13,4 +13,15 @@ export const updateAcceptanceCriteriaStates = (
       isSatisfied,
     };
   });
+};
+
+export const getIsSatisfied = (
+  states: AcceptanceCriteriaState[],
+  criteriaType: AcceptanceCriteriaType
+) => {
+  const matchingState = states.find(
+    (state) => state.criteriaType === criteriaType
+  );
+  if (!matchingState) return false;
+  return matchingState.isSatisfied;
 };

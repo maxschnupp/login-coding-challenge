@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import LoginCard from "./components/LoginCard";
 import InputColumn from "./components/InputColumn";
@@ -8,7 +8,12 @@ import Button from "./components/Button";
 import PasswordAcceptanceCriteria from "./components/PasswordAcceptanceCriteria";
 import CriteriaContainer from "./components/CrtieriaContainer";
 import Banner from "./components/Banner";
-import {debounce} from "lodash";
+import { debounce } from "lodash";
+import {
+  AcceptanceCriteriaState,
+  AcceptanceCriteriaType,
+} from "./domain/passwords/types";
+import { getIsSatisfied, updateAcceptanceCriteriaStates } from "./domain/passwords/acceptanceStates";
 
 const Container = styled.div({
   position: "absolute",
@@ -20,23 +25,56 @@ const Container = styled.div({
   placeContent: "center",
 });
 
+const INITIAL_CRITERIA_STATES: AcceptanceCriteriaState[] = [
+  { criteriaType: AcceptanceCriteriaType.EIGHT_PLUS_CHARS, isSatisfied: false },
+  {
+    criteriaType: AcceptanceCriteriaType.CONTAINS_LOWERCASE,
+    isSatisfied: false,
+  },
+  {
+    criteriaType: AcceptanceCriteriaType.CONTAINS_UPPERCASE,
+    isSatisfied: false,
+  },
+  {
+    criteriaType: AcceptanceCriteriaType.CONTAINS_SPECIAL_CHARACTER,
+    isSatisfied: false,
+  },
+  { criteriaType: AcceptanceCriteriaType.CONTAINS_NUMBER, isSatisfied: false },
+];
+
 const LoginPage = (): JSX.Element => {
-  
   const ThreePixelVerticalSpacer = styled("div")({
     height: "3px",
   });
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordCriteriaStates, setPasswordCriteriaStates] = useState(
+    INITIAL_CRITERIA_STATES
+  );
 
   const handleOnChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setEmail(event.target.value)
-  }
+    setEmail(event.target.value);
+  };
 
-  const handleOnChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const debouncedPasswordUpdate = debounce((password: string) => setPassword(password), 10)
+  const handleOnChangePassword = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const debouncedPasswordUpdate = debounce(
+      (password: string) => setPassword(password),
+      10
+    );
     debouncedPasswordUpdate(event.target.value);
-}
+  };
+
+  useEffect(() => {
+    try {
+      const newPasswordCriteriaStates = updateAcceptanceCriteriaStates(passwordCriteriaStates, password);
+      setPasswordCriteriaStates(newPasswordCriteriaStates);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [password]);
 
   return (
     <Container>
@@ -46,32 +84,55 @@ const LoginPage = (): JSX.Element => {
       <LoginCard>
         <InputColumn>
           <Typography text={"Email"} />
-          <TextInput type={'email'} onChange={handleOnChangeEmail} value={email}/>
+          <TextInput
+            type={"email"}
+            onChange={handleOnChangeEmail}
+            value={email}
+          />
         </InputColumn>
         <ThreePixelVerticalSpacer />
         <InputColumn>
           <Typography text={"Password"} />
-          <TextInput type={'password'} onChange={handleOnChangePassword} value={password}/>
+          <TextInput
+            type={"password"}
+            onChange={handleOnChangePassword}
+            value={password}
+          />
           <CriteriaContainer>
             <PasswordAcceptanceCriteria
               description={"8+ characters"}
-              hasPassed={true}
+              hasPassed={getIsSatisfied(
+                passwordCriteriaStates,
+                AcceptanceCriteriaType.EIGHT_PLUS_CHARS
+              )}
             />
             <PasswordAcceptanceCriteria
               description={"lowercase letter"}
-              hasPassed={true}
+              hasPassed={getIsSatisfied(
+                passwordCriteriaStates,
+                AcceptanceCriteriaType.CONTAINS_LOWERCASE
+              )}
             />
             <PasswordAcceptanceCriteria
               description={"uppercase letter"}
-              hasPassed={false}
+              hasPassed={getIsSatisfied(
+                passwordCriteriaStates,
+                AcceptanceCriteriaType.CONTAINS_UPPERCASE
+              )}
             />
             <PasswordAcceptanceCriteria
               description={"number"}
-              hasPassed={false}
+              hasPassed={getIsSatisfied(
+                passwordCriteriaStates,
+                AcceptanceCriteriaType.CONTAINS_NUMBER
+              )}
             />
             <PasswordAcceptanceCriteria
               description={"special character"}
-              hasPassed={false}
+              hasPassed={getIsSatisfied(
+                passwordCriteriaStates,
+                AcceptanceCriteriaType.CONTAINS_SPECIAL_CHARACTER
+              )}
             />
           </CriteriaContainer>
           <Button
