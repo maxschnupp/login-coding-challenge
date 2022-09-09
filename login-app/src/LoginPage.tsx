@@ -13,7 +13,7 @@ import {
   AcceptanceCriteriaState,
   AcceptanceCriteriaType,
 } from "./domain/passwords/types";
-import { getIsSatisfied, updateAcceptanceCriteriaStates } from "./domain/passwords/acceptanceStates";
+import { allStatesPassed, getIsSatisfied, updateAcceptanceCriteriaStates } from "./domain/passwords/acceptanceStates";
 
 const Container = styled.div({
   position: "absolute",
@@ -139,6 +139,7 @@ const LoginPage = (): JSX.Element => {
             onClick={() => {
               console.log(`email: ${email} password: ${password} 🎉🎉🎉🎉🎉`);
             }}
+            disabled={!allStatesPassed(passwordCriteriaStates)}
             text={"Submit"}
           />
         </InputColumn>

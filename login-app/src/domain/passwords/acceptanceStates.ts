@@ -1,3 +1,4 @@
+import { find } from "lodash";
 import { makePasswordCriteriaValidator } from "./makePasswordCritirieaValidator";
 import { AcceptanceCriteriaState, AcceptanceCriteriaType } from "./types";
 
@@ -25,3 +26,5 @@ export const getIsSatisfied = (
   if (!matchingState) return false;
   return matchingState.isSatisfied;
 };
+
+export const allStatesPassed = (states : AcceptanceCriteriaState[]) => states.map(state => state.isSatisfied).reduce((previous, current) => previous && current)
