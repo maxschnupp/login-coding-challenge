@@ -8,28 +8,33 @@ import TextInput from "./components/TextInput";
 import Button from "./components/Button";
 import PasswordAcceptanceCriteria from "./components/PasswordAcceptanceCriteria";
 import CriteriaContainer from "./components/CrtieriaContainer";
-
+import Banner from "./components/Banner";
 
 const LoginPage = (): JSX.Element => {
   const Container = styled.div({
     position: "absolute",
-    width: "100%",
-    height: "100%",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     display: "grid",
     placeContent: "center",
   });
-  const ThreePixelVerticalSpacer = styled('div')({
-    height: '3px',
+  const ThreePixelVerticalSpacer = styled("div")({
+    height: "3px",
   });
   const isMobilePhone = isMobile && !isTablet;
   return (
     <Container>
+      <Banner>
+        <Typography text={"Registration"} color={"white"} />
+      </Banner>
       <LoginCard isMobile={isMobilePhone}>
         <InputColumn isMobile={isMobilePhone}>
           <Typography text={"Email"} />
           <TextInput isMobile={isMobilePhone} shouldShowAsDots={false} />
         </InputColumn>
-        <ThreePixelVerticalSpacer/>
+        <ThreePixelVerticalSpacer />
         <InputColumn isMobile={isMobilePhone}>
           <Typography text={"Password"} />
           <TextInput isMobile={isMobilePhone} shouldShowAsDots={true} />
