@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import LoginCard from "./components/LoginCard";
 import InputColumn from "./components/InputColumn";
@@ -9,6 +9,8 @@ import Button from "./components/Button";
 import PasswordAcceptanceCriteria from "./components/PasswordAcceptanceCriteria";
 import CriteriaContainer from "./components/CrtieriaContainer";
 import Banner from "./components/Banner";
+import {debounce} from "lodash";
+
 
 const LoginPage = (): JSX.Element => {
   const Container = styled.div({
@@ -24,6 +26,18 @@ const LoginPage = (): JSX.Element => {
     height: "3px",
   });
   const isMobilePhone = isMobile && !isTablet;
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleOnChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setEmail(event.target.value)
+  }
+
+  const handleOnChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+    debounce(() => setPassword(event.target.value), 10)();
+}
+
   return (
     <Container>
       <Banner>
@@ -32,12 +46,12 @@ const LoginPage = (): JSX.Element => {
       <LoginCard isMobile={isMobilePhone}>
         <InputColumn isMobile={isMobilePhone}>
           <Typography text={"Email"} />
-          <TextInput isMobile={isMobilePhone} shouldShowAsDots={false} />
+          <TextInput type={'email'} onChange={handleOnChangeEmail} value={email}/>
         </InputColumn>
         <ThreePixelVerticalSpacer />
         <InputColumn isMobile={isMobilePhone}>
           <Typography text={"Password"} />
-          <TextInput isMobile={isMobilePhone} shouldShowAsDots={true} />
+          <TextInput type={'password'} onChange={handleOnChangePassword} value={password}/>
           <CriteriaContainer>
             <PasswordAcceptanceCriteria
               description={"8+ characters"}
@@ -63,7 +77,7 @@ const LoginPage = (): JSX.Element => {
           <Button
             isMobile={isMobilePhone}
             onClick={() => {
-              console.log("🎉🎉🎉🎉🎉");
+              console.log(`email: ${email} password: ${password} 🎉🎉🎉🎉🎉`);
             }}
             text={"Submit"}
           />
