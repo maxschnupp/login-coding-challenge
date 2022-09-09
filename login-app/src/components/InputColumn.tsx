@@ -10,7 +10,7 @@ const InputColumn = ({children, isMobile} : IInputColumnProps) => {
   const Column = styled("div")({
     width: isMobile ? "256px" : "276px",
     // backgroundColor: "red"
-    margin: '8px 8px 8px 8px',
+    margin: '8px 8px 0px 8px',
   });
   return <Column>{children}</Column>
 };

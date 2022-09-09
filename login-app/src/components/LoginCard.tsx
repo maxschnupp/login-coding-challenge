@@ -14,7 +14,7 @@ const LoginCard = ({ children, isMobile }: ILoginCardProps) => {
     paddingLeft: "8px",
     paddingRight: "8px",
     paddingTop: "24px",
-    paddingBottom: "24px",
+    paddingBottom: "32px",
     display: "flex",
     flexDirection: isMobile ? "column" : "row",
   });

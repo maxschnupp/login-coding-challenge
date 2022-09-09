@@ -13,7 +13,7 @@ const TextInput = ({shouldShowAsDots, isMobile} : ITextInputProps): JSX.Element 
     paddingLeft: "16px",
     paddingRight: "16px",
     marginTop: "16px",
-    marginBottom: "16px",
+    marginBottom: "13px",
   });
   return <StyledInput type={shouldShowAsDots ? 'password' : 'text'} />;
 };
